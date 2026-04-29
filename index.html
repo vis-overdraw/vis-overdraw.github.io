@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ORM Overdraw Overview</title>
+    <meta
+      name="description"
+      content="Overview of scatterplot overdraw reduction methods with faceted filtering by taxonomy."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="ambient ambient-three"></div>
+
+    <div class="page-shell" id="app">
+      <aside class="sidebar panel" id="sidebar">
+        <div class="sidebar__head">
+          <p class="eyebrow">ORM Survey</p>
+          <h1>Scatterplot overdraw methods</h1>
+          <p class="sidebar__lede">
+            Explore the survey by taxonomy dimensions, year range, and sort order.
+          </p>
+        </div>
+
+        <section class="summary-card">
+          <div class="summary-card__copy">
+            <span class="summary-card__label">Papers selected</span>
+            <strong class="summary-card__count" id="selectedCount">0</strong>
+          </div>
+          <div class="year-chart" id="yearChart" aria-label="Year distribution chart"></div>
+        </section>
+
+        <section class="range-card panel-inner">
+          <div class="range-card__head">
+            <span>Year range</span>
+            <strong id="yearRangeLabel">—</strong>
+          </div>
+          <div class="dual-range" id="yearRange">
+            <div class="dual-range__track"></div>
+            <div class="dual-range__fill" id="yearRangeFill"></div>
+            <input id="yearMin" class="dual-range__input" type="range" />
+            <input id="yearMax" class="dual-range__input" type="range" />
+          </div>
+          <div class="range-card__ticks">
+            <span id="yearMinLabel"></span>
+            <span id="yearMaxLabel"></span>
+          </div>
+        </section>
+
+        <button class="clear-btn" id="clearFilters" type="button">Clear filters</button>
+
+        <div class="facet-scroll" id="facets"></div>
+      </aside>
+
+      <main class="content">
+        <header class="content__hero panel">
+          <div>
+            <p class="eyebrow">Overview</p>
+            <h2>Filtered papers</h2>
+          </div>
+          <div class="toolbar panel-inner">
+            <div class="toolbar__meta">
+              <span class="toolbar__label">Showing</span>
+              <strong id="resultCount">0 papers</strong>
+            </div>
+            <label class="sort-select">
+              <span>Sort</span>
+              <select id="sortSelect">
+                <option value="year-desc">Year, newest first</option>
+                <option value="year-asc">Year, oldest first</option>
+                <option value="title-asc">Title, A to Z</option>
+                <option value="title-desc">Title, Z to A</option>
+              </select>
+            </label>
+          </div>
+        </header>
+
+        <section class="paper-grid" id="paperGrid" aria-live="polite"></section>
+      </main>
+    </div>
+
+    <template id="facetSectionTemplate">
+      <section class="facet-section panel-inner">
+        <header class="facet-section__head">
+          <div>
+            <p class="facet-section__eyebrow"></p>
+            <h3></h3>
+          </div>
+          <span class="facet-section__count"></span>
+        </header>
+        <div class="facet-groups"></div>
+      </section>
+    </template>
+
+    <template id="facetGroupTemplate">
+      <div class="facet-group">
+        <p class="facet-group__label"></p>
+        <div class="facet-pills"></div>
+      </div>
+    </template>
+
+    <template id="paperCardTemplate">
+      <article class="paper-card panel-inner">
+        <div class="paper-card__preview">
+          <img alt="" />
+          <div class="paper-card__placeholder">
+            <span>First-page image pending</span>
+          </div>
+        </div>
+        <div class="paper-card__body">
+          <div class="paper-card__head">
+            <div>
+              <h3></h3>
+              <p class="paper-card__venue"></p>
+            </div>
+            <span class="year-chip"></span>
+          </div>
+          <dl class="paper-card__meta">
+            <div>
+              <dt>Venue</dt>
+              <dd data-field="venue"></dd>
+            </div>
+            <div>
+              <dt>Year</dt>
+              <dd data-field="year"></dd>
+            </div>
+            <div class="paper-card__link-row">
+              <dt>Link</dt>
+              <dd data-field="link"></dd>
+            </div>
+            <div>
+              <dt>Reference</dt>
+              <dd data-field="reference"></dd>
+            </div>
+          </dl>
+          <div class="paper-card__tags">
+            <span class="paper-card__tags-label">ORM Type</span>
+            <div class="paper-card__tag-list" data-field="ormTags"></div>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
