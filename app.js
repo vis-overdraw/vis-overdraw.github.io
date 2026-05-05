@@ -222,7 +222,19 @@ function renderPapers(filteredPapers) {
       placeholder.style.display = 'grid';
     }
 
-    node.querySelector('h3').textContent = paper.title;
+    const titleNode = node.querySelector('h3');
+    titleNode.innerHTML = '';
+    if (paper.link) {
+      const titleLink = document.createElement('a');
+      titleLink.href = paper.link;
+      titleLink.target = '_blank';
+      titleLink.rel = 'noreferrer';
+      titleLink.className = 'paper-card__title-link';
+      titleLink.textContent = paper.title;
+      titleNode.appendChild(titleLink);
+    } else {
+      titleNode.textContent = paper.title;
+    }
     node.querySelector('.paper-card__venue').textContent = paper.reference;
     node.querySelector('.year-chip').textContent = String(paper.year ?? '');
     node.querySelector('[data-field="venue"]').textContent = paper.venue;
